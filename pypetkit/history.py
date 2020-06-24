@@ -10,9 +10,9 @@ class PetKitHistory:
 
     @property
     def name(self):
-        if "name" in self._history:
-            return self._history["name"]
-        return "Snack"
+        if self._history.get("name") is None:
+            return "Snack"
+        return self._history.get("name")
 
     @property
     def status(self):
@@ -28,18 +28,18 @@ class PetKitHistory:
 
     @property
     def realAmount(self):
-        if "state" in self._history:
+        if self._history.get("state") is not None:
             return timedelta(seconds=self._history["state"]["realAmount"])
         return None
 
     @property
     def completedAt(self):
-        if "state" in self._history:
+        if self._history.get("state") is not None:
             return timedelta(seconds=self._history["state"]["completedAt"])
         return None
     
     @property
     def error(self):
-        if "state" in self._history:
+        if self._history.get("state") is not None:
           return "errCode" in self._history["state"]
         return False
