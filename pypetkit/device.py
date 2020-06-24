@@ -11,7 +11,6 @@ class PetKitDevice:
       self._access_token = token
       self._sensor = sensor
       self._sensor["schedule"] = {}
-      self._sensor["history"] = []
       for sh in sensor["feed"]["items"]:
           shd = PetKitSchedule(sh)
           self._sensor["schedule"][sh["id"]] = shd
@@ -68,6 +67,7 @@ class PetKitDevice:
             headers={'X-Session': self._access_token}
         )
         try:
+            self._sensor["history"] = []
             for item in result.json()['result']:
                 for history in item['items']:
                   self._sensor["history"].append(PetKitHistory(history))
